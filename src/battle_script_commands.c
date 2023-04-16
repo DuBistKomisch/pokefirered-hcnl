@@ -9791,11 +9791,16 @@ static void Cmd_trygivecaughtmonnick(void)
     switch (gBattleCommunication[MULTIUSE_STATE])
     {
     case 0:
+        // skip straight to nicknaming
+        gBattleCommunication[MULTIUSE_STATE] = 2;
+        BeginFastPaletteFade(3);
+        /*
         HandleBattleWindow(23, 8, 29, 13, 0);
         BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
         gBattleCommunication[MULTIUSE_STATE]++;
         gBattleCommunication[CURSOR_POSITION] = 0;
         BattleCreateYesNoCursorAt();
+        */
         break;
     case 1:
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)

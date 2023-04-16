@@ -73,8 +73,9 @@ SaffronCity_Dojo_EventScript_ReceivedHitmonParty::
 	waitmessage
 	waitfanfare
 	setflag FLAG_GOT_HITMON_FROM_DOJO
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_EndGiveMon
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_EndGiveMon
 	call EventScript_GetGiftMonPartySlot
 	call EventScript_ChangePokemonNickname
 	goto SaffronCity_Dojo_EventScript_EndGiveMon
@@ -88,8 +89,9 @@ SaffronCity_Dojo_EventScript_ReceivedHitmonPC::
 	waitmessage
 	waitfanfare
 	setflag FLAG_GOT_HITMON_FROM_DOJO
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_TransferredHitmonToPC
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_TransferredHitmonToPC
 	call EventScript_NameReceivedBoxMon
 	goto SaffronCity_Dojo_EventScript_TransferredHitmonToPC
 	end

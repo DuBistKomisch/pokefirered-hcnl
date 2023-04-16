@@ -213,9 +213,11 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty::
 	message Text_PlayerObtainedTheMon
 	waitmessage
 	waitfanfare
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, CeladonCity_GameCorner_PrizeRoom_EventScript_NicknamePartyMon
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, YES, CeladonCity_GameCorner_PrizeRoom_EventScript_NicknamePartyMon
+	//goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_NicknamePartyMon
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC::
@@ -226,8 +228,9 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC::
 	message Text_PlayerObtainedTheMon
 	waitmessage
 	waitfanfare
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC
 	call EventScript_NameReceivedBoxMon
 	goto CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC
 	end

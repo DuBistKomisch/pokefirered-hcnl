@@ -25,8 +25,9 @@ CeladonCity_Condominiums_RoofRoom_EventScript_GetEeveeParty::
 	waitmessage
 	waitfanfare
 	bufferspeciesname STR_VAR_1, SPECIES_EEVEE
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_SetGotEevee
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_SetGotEevee
 	call EventScript_GetGiftMonPartySlot
 	call EventScript_ChangePokemonNickname
 	goto CeladonCity_Condominiums_RoofRoom_EventScript_SetGotEevee
@@ -39,8 +40,9 @@ CeladonCity_Condominiums_RoofRoom_EventScript_GetEeveePC::
 	waitmessage
 	waitfanfare
 	bufferspeciesname STR_VAR_1, SPECIES_EEVEE
-	msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_TransferEeveeToPC
+	// skip straight to nicknaming
+	//msgbox Text_GiveNicknameToThisMon, MSGBOX_YESNO
+	//goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_TransferEeveeToPC
 	call EventScript_NameReceivedBoxMon
 	goto CeladonCity_Condominiums_RoofRoom_EventScript_TransferEeveeToPC
 	end
