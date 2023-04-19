@@ -6,7 +6,9 @@
 #include "decompress.h"
 #include "graphics.h"
 #include "menu.h"
+#include "overworld.h"
 #include "pokedex.h"
+#include "pokemon_storage_system.h"
 #include "pokemon_summary_screen.h"
 #include "safari_zone.h"
 #include "constants/songs.h"
@@ -1554,7 +1556,8 @@ void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 
 void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
 {
-    u8 battlerId, healthBarSpriteId;
+    u8 battlerId, healthBarSpriteId, currentLocation, i, j;
+    bool8 speciesCaught, locationCaught;
 
     if (gBattleTypeFlags & (BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_OLD_MAN_TUTORIAL | BATTLE_TYPE_POKEDUDE))
         return;
@@ -1567,15 +1570,31 @@ void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
         return;
     if (CheckBattleTypeGhost(&gEnemyParty[gBattlerPartyIndexes[battlerId]], battlerId))
         return;
-    if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(GetMonData(&gEnemyParty[gBattlerPartyIndexes[battlerId]], MON_DATA_SPECIES)), FLAG_GET_CAUGHT))
-        return;
+
+    speciesCaught = GetSetPokedexFlag(SpeciesToNationalPokedexNum(GetMonData(&gEnemyParty[gBattlerPartyIndexes[battlerId]], MON_DATA_SPECIES)), FLAG_GET_CAUGHT);
+    currentLocation = GetCurrentRegionMapSectionId();
+    locationCaught = FALSE;
+    for (i = 0; i < PARTY_SIZE; i++)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_MET_LOCATION) == currentLocation)
+            locationCaught = TRUE;
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+        for (j = 0; j < IN_BOX_COUNT; j++)
+            if (GetBoxMonDataAt(i, j, MON_DATA_MET_LOCATION) == currentLocation)
+                locationCaught = TRUE;
+    if (!speciesCaught && !locationCaught)
+      return;
 
     healthBarSpriteId = gSprites[healthboxSpriteId].sHealthBarSpriteId;
 
-    if (noStatus)
-        CpuCopy32(GetBattleInterfaceGfxPtr(B_INTERFACE_GFX_BALL_CAUGHT), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 1 * TILE_SIZE_4BPP);
-    else
+    if (noStatus) {
+        if (locationCaught) {
+            CpuCopy32(GetBattleInterfaceGfxPtr(69), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 1 * TILE_SIZE_4BPP);
+        } else {
+            CpuCopy32(GetBattleInterfaceGfxPtr(B_INTERFACE_GFX_BALL_CAUGHT), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 1 * TILE_SIZE_4BPP);
+        }
+    } else {
         CpuFill32(0, (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 1 * TILE_SIZE_4BPP);
+    }
 }
 
 enum
