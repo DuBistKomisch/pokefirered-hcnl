@@ -1937,7 +1937,9 @@ static void CB2_EggHatch_1(void)
         break;
     case 7:
         if (IsFanfareTaskInactive())
-            sEggHatchData->CB2_state++;
+            // skip straight to nicknaming
+            //sEggHatchData->CB2_state++;
+            sEggHatchData->CB2_state = 10;
         break;
     case 8:
         DayCare_GetMonNickname(&gPlayerParty[sEggHatchData->eggPartyID], gStringVar1);
@@ -1954,19 +1956,23 @@ static void CB2_EggHatch_1(void)
         }
         break;
     case 10:
+        /*
         switch (Menu_ProcessInputNoWrapClearOnChoose())
         {
         case 0:
+        */
             DayCare_GetMonNickname(&gPlayerParty[sEggHatchData->eggPartyID], gStringVar3);
             species = GetMonData(&gPlayerParty[sEggHatchData->eggPartyID], MON_DATA_SPECIES);
             gender = GetMonGender(&gPlayerParty[sEggHatchData->eggPartyID]);
             personality = GetMonData(&gPlayerParty[sEggHatchData->eggPartyID], MON_DATA_PERSONALITY, 0);
             DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar3, species, gender, personality, EggHatchSetMonNickname);
+        /*
             break;
         case 1:
         case -1:
             sEggHatchData->CB2_state++;
         }
+        */
         break;
     case 11:
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
