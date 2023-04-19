@@ -252,6 +252,7 @@ static u8 GetTextEntryPosition(void);
 static bool8 AddTextCharacter(void);
 static void BufferCharacter(u8 character);
 static void SaveInputText(void);
+static bool8 InputTextIsEmpty(void);
 static void LoadGfx(void);
 static void CreateHelperTasks(void);
 static void LoadPalettes(void);
@@ -680,6 +681,11 @@ static bool8 MainState_MoveToOKButton(void)
 
 static bool8 MainState_PressedOKButton(void)
 {
+    if (InputTextIsEmpty()) {
+      SetInputState(INPUT_STATE_ENABLED);
+      sNamingScreen->state = STATE_HANDLE_INPUT;
+      return FALSE;
+    }
     SaveInputText();
     SetInputState(INPUT_STATE_DISABLED);
     SetCursorFlashing(FALSE);
@@ -1852,6 +1858,20 @@ static void SaveInputText(void)
             break;
         }
     }
+}
+
+static bool8 InputTextIsEmpty(void)
+{
+    u8 i;
+
+    for (i = 0; i < sNamingScreen->template->maxChars; i++)
+    {
+        if (sNamingScreen->textBuffer[i] != CHAR_SPACE && sNamingScreen->textBuffer[i] != EOS)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
 }
 
 static void LoadGfx(void)
